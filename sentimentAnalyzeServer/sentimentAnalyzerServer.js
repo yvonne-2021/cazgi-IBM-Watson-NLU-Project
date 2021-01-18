@@ -45,22 +45,30 @@ app.get("/text/emotion", (req,res) => {
 
     let naturalLanguageUnderstanding = getNLUInstance();
     const analyzeParams = {
-        'url': 'www.ibm.com',
+        'text': 'this is a test',
         'features': {
-            'categories': {
-            'limit': 3
-             }
-        }
+            'entities': {
+            'emotion': true,
+            'sentiment': true,
+            'limit': 2,
+            },
+            'keywords': {
+            'emotion': true,
+            'sentiment': true,
+            'limit': 2,
+            },
+        },
     };
+
+
 
     naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(analysisResults => {
             console.log(JSON.stringify(analysisResults, null, 2));
             return res.send(JSON.stringify(analysisResults, null, 2));
-            //return res.send({"happy":"10","sad":"90"});
-    })
+        })
         .catch(err => {
-        console.log('error:', err);
+            console.log('error:', err);
     });
 
     
